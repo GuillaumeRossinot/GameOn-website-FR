@@ -195,9 +195,7 @@ function validate(event) {
   console.log("isValide check validate: " + isValid)
 
   if (isValid) {
-    const formValid = document.getElementById("submit");
-    formValid.addEventListener('submit', (event) => {
-      event.preventDefault();
-    })
+    //document.getElementById("reserve").submit();
+    form.submit();
   }
 }
