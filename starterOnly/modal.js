@@ -46,6 +46,7 @@ const location6 = document.getElementById("location6");
 const checkbox1 = document.getElementById("checkbox1");
 const checkbox2 = document.getElementById("checkbox2");
 
+// Donctions de validation des champs
 
 function valideFirstname() {
   if (firstName.value == '' || firstName.lenght < 2) {
@@ -145,14 +146,8 @@ function valideConditions() {
 }
 
 // Validity
-/* function submit() {
-  const formValid = document.getElementById("submit");
-  formValid.addEventListener('submit', (e) => {
-    e.preventDefault();
-  })
-}
- */
-function validate(event) {
+
+async function validate(event) {
   event.preventDefault();
   let isValid = true;
   console.log("isValide Debut: " + isValid)
@@ -195,7 +190,16 @@ function validate(event) {
   console.log("isValide check validate: " + isValid)
 
   if (isValid) {
-    //document.getElementById("reserve").submit();
+    var succes = document.getElementById("succesForm")
+    succes.textContent = "Merci ! Votre réservation a été reçue."
+    succes.style.color = "green"
+    await delay(5);
     form.submit();
   }
+}
+
+function delay(n) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, n * 1000);
+  });
 }
