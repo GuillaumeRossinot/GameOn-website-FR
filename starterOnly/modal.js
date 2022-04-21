@@ -13,6 +13,7 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const close = document.querySelector(".close");
 const form = document.querySelector("form");
+const succes = document.querySelector("succes");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -46,13 +47,14 @@ const location6 = document.getElementById("location6");
 const checkbox1 = document.getElementById("checkbox1");
 const checkbox2 = document.getElementById("checkbox2");
 
-// Donctions de validation des champs
+// Fonctions de validation des champs
 
-function valideFirstname() {
+document.addEventListener('keyup', valideFirstname);
+function valideFirstname(e) {
   if (firstName.value == '' || firstName.lenght < 2) {
-    var error = document.getElementById("errorFName")
-    error.textContent = "Veuillez entrer votre prenom."
-    error.style.color = "red"
+    var e = document.getElementById("errorFName")
+    e.textContent = "Veuillez entrer votre prenom."
+    e.style.color = "red"
     return false;
   } else {
     var error = document.getElementById("errorFName")
@@ -61,106 +63,111 @@ function valideFirstname() {
   }
 }
 
-function valideLastname() {
+document.addEventListener('keyup', valideLastname);
+function valideLastname(e) {
   if (lastName.value == '' || lastName.lenght < 2) {
-    var error = document.getElementById("errorLName")
-    error.textContent = "Veuillez entrer votre nom."
-    error.style.color = "red"
+    var e = document.getElementById("errorLName")
+    e.textContent = "Veuillez entrer votre nom."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorLName")
-    error.textContent = ""
+    var e = document.getElementById("errorLName")
+    e.textContent = ""
     return true;
   }
 }
 
-function valideEmail() {
+document.addEventListener('keyup', valideEmail);
+function valideEmail(e) {
   if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)) {
-    var error = document.getElementById("errorEmail")
-    error.textContent = "Veuillez entrer votre email."
-    error.style.color = "red"
+    var e = document.getElementById("errorEmail")
+    e.textContent = "Veuillez entrer votre email."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorEmail")
-    error.textContent = ""
+    var e = document.getElementById("errorEmail")
+    e.textContent = ""
     return true;
   }
 }
 
-function valideBirthDate() {
+document.addEventListener('keyup', valideBirthDate);
+function valideBirthDate(e) {
   if (!/^\d{4}([./-])\d{2}\1\d{2}$/.test(birthdate.value)) {
-    var error = document.getElementById("errorBDate")
-    error.textContent = "Veuillez entrer votre date de naissance."
-    error.style.color = "red"
+    var e = document.getElementById("errorBDate")
+    e.textContent = "Veuillez entrer votre date de naissance."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorBDate")
-    error.textContent = ""
+    var e = document.getElementById("errorBDate")
+    e.textContent = ""
     return true;
   }
 }
 
-function valideTourNumber() {
+document.addEventListener('keyup', valideTourNumber);
+function valideTourNumber(e) {
   if (quantity.value == '') {
-    var error = document.getElementById("errorTournamentNumber")
-    error.textContent = "Veuillez entrer un nombre de tournois."
-    error.style.color = "red"
+    var e = document.getElementById("errorTournamentNumber")
+    e.textContent = "Veuillez entrer un nombre de tournois."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorTournamentNumber")
-    error.textContent = ""
+    var e = document.getElementById("errorTournamentNumber")
+    e.textContent = ""
     return true;
   }
 }
 
-function valideTournament() {
+function valideTournament(e) {
   if (!location1.checked && !location2.checked && !location3.checked && !location4.checked && !location5.checked && !location6.checked) {
-    var error = document.getElementById("errorTournament")
-    error.textContent = "Veuillez selectionner un tournoi."
-    error.style.color = "red"
+    var e = document.getElementById("errorTournament")
+    e.textContent = "Veuillez selectionner un tournoi."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorTournament")
-    error.textContent = ""
+    var e = document.getElementById("errorTournament")
+    e.textContent = ""
     return true;
   }
 }
 
 function valideConditions() {
   if (!checkbox1.checked) {
-    var error = document.getElementById("errorAccept")
-    error.textContent = "Veuillez cocher la case des conditions d'utilisation."
-    error.style.color = "red"
+    var e = document.getElementById("errorAccept")
+    e.textContent = "Veuillez cocher la case des conditions d'utilisation."
+    e.style.color = "red"
     return false;
   }
   else {
-    var error = document.getElementById("errorAccept")
-    error.textContent = ""
+    var e = document.getElementById("errorAccept")
+    e.textContent = ""
     return true;
   }
 }
 
 // Validity
 
-async function validate(event) {
+function validate(event) {
   event.preventDefault();
   let isValid = true;
   console.log("isValide Debut: " + isValid)
 
-  if (!valideFirstname() == true) {
+  if (!valideFirstname() == true || !valideLastname() == true || !valideEmail() == true
+    || !valideBirthDate() == true || !valideTourNumber() == true || !valideTournament() == true || !valideConditions() == true) {
     isValid = false;
   }
   console.log("isValide name fin: " + isValid)
 
-  if (!valideLastname() == true) {
-    isValid = false;
-  }
-  console.log("isValide last name fin: " + isValid)
+  /*  if (!valideLastname() == true) {
+     isValid = false;
+   }
+   console.log("isValide last name fin: " + isValid) 
 
   if (!valideEmail() == true) {
     isValid = false;
@@ -187,16 +194,25 @@ async function validate(event) {
   }
   console.log("isValide condition fin: " + isValid)
 
-  console.log("isValide check validate: " + isValid)
+  console.log("isValide check validate: " + isValid) */
 
   if (isValid) {
-    var succes = document.getElementById("succesForm")
-    succes.textContent = "Merci ! Votre réservation a été reçue."
-    succes.style.color = "green"
-    await delay(5);
-    form.submit();
+    document.getElementById("BtnSubmit")
+      .addEventListener("click", confirmMessage)
+    //form.submit();
   }
 }
+
+function confirmMessage() {
+  document.getElementById("Form").hidden = true;
+  document.getElementById("succesForm").hidden = false;
+}
+
+function closeSuccess() {
+  modalbg.style.display = "none";
+  form.submit();
+}
+
 
 function delay(n) {
   return new Promise(function (resolve) {
