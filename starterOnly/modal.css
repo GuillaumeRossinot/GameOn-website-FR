@@ -201,8 +201,6 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
-  height: 710px;
-  width: 500px;
 }
 
 label {
@@ -543,8 +541,12 @@ footer {
 
   color: #FFFFFF;
   margin-top: 250px;
+  margin-bottom: 250px;
 
+}
 
+.error {
+  font-size: 17px;
 }
 
 @media screen and (max-width: 800px) {
