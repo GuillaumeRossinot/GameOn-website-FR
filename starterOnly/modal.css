@@ -39,6 +39,8 @@ img {
 
 .header-logo {
   float: left;
+  width: auto;
+  height: auto;
 }
 
 .main-navbar {
@@ -80,6 +82,13 @@ img {
     display: none;
   }
 
+  .header-logo{
+left: 7.25%;
+right: 67.87%;
+top: 4.48%;
+bottom: 92.93%;
+  }
+
   .topnav a.icon {
     float: right;
     display: block;
@@ -109,12 +118,22 @@ img {
     display: none;
   }
 
+  .logo{
+    width: 40%;
+    left: 7.25%;
+    right: 67.87%;
+    top: 4.48%;
+    bottom: 92.93%;
+      }
+
   .topnav a.icon {
     float: right;
     display: block;
     margin-top: -15px;
   }
+
 }
+
 
 main {
   font-size: 130%;

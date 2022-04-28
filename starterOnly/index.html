@@ -13,7 +13,7 @@
 <body>
   <div class="topnav" id="myTopnav">
     <div class="header-logo">
-      <img alt="logo" src="Logo.png" width="auto" height="auto" />
+      <img alt="logo" src="Logo.png" class ="logo" />
     </div>
     <div class="main-navbar">
 
@@ -74,7 +74,7 @@
               </div>
               <div class="formData" id="formData">
                 <label for="birthdate" required>Date de naissance</label><br>
-                <input class="text-control" type="date" id="birthdate" name="birthdate" /><br>
+                <input class="text-control" type="date" id="birthdate" name="birthdate" max=""  min="1900-01-02" /><br>
                 <span class="error" id="errorBDate"></span>
               </div>
               <div class="formData" id="formData">

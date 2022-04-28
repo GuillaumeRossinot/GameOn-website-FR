@@ -49,9 +49,10 @@ const checkbox2 = document.getElementById("checkbox2");
 
 // Fonctions de validation des champs
 
-document.addEventListener('keyup', valideFirstname);
+firstName.addEventListener('keyup', valideFirstname);
 function valideFirstname(e) {
-  if (firstName.value == '' || firstName.lenght < 2) {
+  console.log("firstname" + firstName.value.length)
+  if (firstName.value.length < 2) {
     var e = document.getElementById("errorFName")
     e.textContent = "Veuillez entrer votre prenom."
     e.style.color = "red"
@@ -63,9 +64,9 @@ function valideFirstname(e) {
   }
 }
 
-document.addEventListener('keyup', valideLastname);
+lastName.addEventListener('keyup', valideLastname);
 function valideLastname(e) {
-  if (lastName.value == '' || lastName.lenght < 2) {
+  if (lastName.value.length < 2) {
     var e = document.getElementById("errorLName")
     e.textContent = "Veuillez entrer votre nom."
     e.style.color = "red"
@@ -78,7 +79,7 @@ function valideLastname(e) {
   }
 }
 
-document.addEventListener('keyup', valideEmail);
+email.addEventListener('keyup', valideEmail);
 function valideEmail(e) {
   if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)) {
     var e = document.getElementById("errorEmail")
@@ -93,11 +94,19 @@ function valideEmail(e) {
   }
 }
 
-document.addEventListener('keyup', valideBirthDate);
+birthdate.addEventListener('keyup', valideBirthDate);
 function valideBirthDate(e) {
+  var GivenDate = birthdate.value;
+  var CurrentDate = new Date();
+  GivenDate = new Date(GivenDate);
   if (!/^\d{4}([./-])\d{2}\1\d{2}$/.test(birthdate.value)) {
     var e = document.getElementById("errorBDate")
     e.textContent = "Veuillez entrer votre date de naissance."
+    e.style.color = "red"
+    return false;
+  } else if (GivenDate > CurrentDate) {
+    var e = document.getElementById("errorBDate")
+    e.textContent = "votre date de naissance est incorrect."
     e.style.color = "red"
     return false;
   }
@@ -108,7 +117,24 @@ function valideBirthDate(e) {
   }
 }
 
-document.addEventListener('keyup', valideTourNumber);
+function todayDate() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+
+  today = yyyy + '-' + mm + '-' + dd;
+  birthdate.setAttribute("max", today);
+  
+}
+
+quantity.addEventListener('keyup', valideTourNumber);
 function valideTourNumber(e) {
   if (quantity.value == '') {
     var e = document.getElementById("errorTournamentNumber")
@@ -124,17 +150,27 @@ function valideTourNumber(e) {
 }
 
 function valideTournament(e) {
-  if (!location1.checked && !location2.checked && !location3.checked && !location4.checked && !location5.checked && !location6.checked) {
+  const checkTournament = Array.of(
+    location1.checked,
+    location2.checked,
+    location3.checked,
+    location4.checked,
+    location5.checked,
+    location6.checked
+  );
+  const isCheck = (inputStatus) => inputStatus === true;
+
+  if (!checkTournament.some(isCheck)) {
     var e = document.getElementById("errorTournament")
     e.textContent = "Veuillez selectionner un tournoi."
     e.style.color = "red"
     return false;
-  }
-  else {
+  } else {
     var e = document.getElementById("errorTournament")
     e.textContent = ""
     return true;
   }
+
 }
 
 function valideConditions() {
@@ -155,67 +191,53 @@ function valideConditions() {
 
 function validate(event) {
   event.preventDefault();
-  let isValid = true;
-  console.log("isValide Debut: " + isValid)
+  const requiredFields = Array.of(
+    valideFirstname(),
+    valideLastname(),
+    valideEmail(),
+    valideBirthDate(),
+    valideTourNumber(),
+    valideTournament(),
+    valideConditions()
+  );
 
-  if (!valideFirstname() == true || !valideLastname() == true || !valideEmail() == true
-    || !valideBirthDate() == true || !valideTourNumber() == true || !valideTournament() == true || !valideConditions() == true) {
-    isValid = false;
+  const isValid = (inputStatus) => inputStatus === true;
+  if (requiredFields.every(isValid)) {
+    console.log("isValide name fin: " + isValid)
+
+  document.getElementById("BtnSubmit")
+    .addEventListener("click", confirmMessage(isValid))
   }
-  console.log("isValide name fin: " + isValid)
 
-  /*  if (!valideLastname() == true) {
-     isValid = false;
-   }
-   console.log("isValide last name fin: " + isValid) 
-
-  if (!valideEmail() == true) {
-    isValid = false;
+  const getFormJSON = (form) => {
+    const data = new FormData(form);
+    return Array.from(data.keys()).reduce((result, key) => {
+      result[key] = data.get(key);
+      return result;
+    }, {});
+  };
+  
+      const handler = (event) => {
+        event.preventDefault();
+        const valid = form.reportValidity();
+        if (valid) {
+          const result = getFormJSON(form);
+          console.log(result)
+        }
   }
-  console.log("isValide email fin: " + isValid)
+  form.addEventListener("submit", handler)
 
-  if (!valideBirthDate() == true) {
-    isValid = false;
-  }
-  console.log("isValide birthDate fin: " + isValid)
+}
 
-  if (!valideTourNumber() == true) {
-    isValid = false;
-  }
-  console.log("isValide nombre tournoi fin: " + isValid)
-
-  if (!valideTournament() == true) {
-    isValid = false;
-  }
-  console.log("isValide tournoi fin: " + isValid)
-
-  if (!valideConditions() == true) {
-    isValid = false;
-  }
-  console.log("isValide condition fin: " + isValid)
-
-  console.log("isValide check validate: " + isValid) */
-
+function confirmMessage(isValid) {
   if (isValid) {
-    document.getElementById("BtnSubmit")
-      .addEventListener("click", confirmMessage)
-    //form.submit();
+    document.getElementById("Form").hidden = true;
+    document.getElementById("succesForm").hidden = false;
+    // console.log(form.submit())
   }
 }
 
-function confirmMessage() {
-  document.getElementById("Form").hidden = true;
-  document.getElementById("succesForm").hidden = false;
-}
 
 function closeSuccess() {
   modalbg.style.display = "none";
-  form.submit();
-}
-
-
-function delay(n) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, n * 1000);
-  });
 }
