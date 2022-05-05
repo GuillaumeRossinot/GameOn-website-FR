@@ -206,27 +206,26 @@ function validate(event) {
     console.log("isValide name fin: " + isValid)
 
   document.getElementById("BtnSubmit")
-    .addEventListener("click", confirmMessage(isValid))
+      .addEventListener("click", confirmMessage(isValid))
+    
+      const getFormJSON = (form) => {
+        const data = new FormData(form);
+        return Array.from(data.keys()).reduce((result, key) => {
+          result[key] = data.get(key);
+          return result;
+        }, {});
+      };
+      
+          const handler = (event) => {
+            event.preventDefault();
+            const valid = form.reportValidity();
+            if (valid) {
+              const result = getFormJSON(form);
+              console.log(result)
+            }
+      }
+      form.addEventListener("submit", handler) 
   }
-
-  const getFormJSON = (form) => {
-    const data = new FormData(form);
-    return Array.from(data.keys()).reduce((result, key) => {
-      result[key] = data.get(key);
-      return result;
-    }, {});
-  };
-  
-      const handler = (event) => {
-        event.preventDefault();
-        const valid = form.reportValidity();
-        if (valid) {
-          const result = getFormJSON(form);
-          console.log(result)
-        }
-  }
-  form.addEventListener("submit", handler)
-
 }
 
 function confirmMessage(isValid) {
