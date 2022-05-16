@@ -51,7 +51,6 @@ const checkbox2 = document.getElementById("checkbox2");
 
 firstName.addEventListener('keyup', valideFirstname);
 function valideFirstname(e) {
-  console.log("firstname" + firstName.value.length)
   if (firstName.value.length < 2) {
     var e = document.getElementById("errorFName")
     e.textContent = "Veuillez entrer votre prenom."
@@ -203,7 +202,6 @@ function validate(event) {
 
   const isValid = (inputStatus) => inputStatus === true;
   if (requiredFields.every(isValid)) {
-    console.log("isValide name fin: " + isValid)
 
   document.getElementById("BtnSubmit")
       .addEventListener("click", confirmMessage(isValid))
@@ -232,7 +230,6 @@ function confirmMessage(isValid) {
   if (isValid) {
     document.getElementById("Form").hidden = true;
     document.getElementById("succesForm").hidden = false;
-    // console.log(form.submit())
   }
 }
 
